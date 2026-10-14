@@ -1,8 +1,11 @@
 # 🎮 RomsFun Downloader & R36S Optimizer
 
-Una herramienta CLI potente y automatizada en Python para buscar, listar y descargar ROMs desde **RomsFun**, optimizada para consolas portátiles retro como la **R36S** (ArkOS / EmulationStation / AmberELEC).
+Una herramienta para buscar, listar y descargar ROMs desde **RomsFun**, optimizada para consolas portátiles retro como la **R36S** (ArkOS / EmulationStation / AmberELEC).
+
+Incluye **CLI en Python** y una **app de escritorio nativa** (Electron + React) con tema azul celeste. El núcleo de descarga sigue siendo Python.
 
 ![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
+![Desktop](https://img.shields.io/badge/Desktop-Electron%20%2B%20React-skyblue.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![R36S Ready](https://img.shields.io/badge/R36S-Ready-magenta.svg)
 ![Rich UI](https://img.shields.io/badge/UI-Rich%20Terminal-cyan.svg)
@@ -23,6 +26,7 @@ Una herramienta CLI potente y automatizada en Python para buscar, listar y desca
   * Elimina automáticamente los archivos comprimidos originales tras la extracción.
 * 📄 **Paginación Multipágina:** Navega automáticamente entre las páginas de RomsFun para cumplir con cualquier número de juegos solicitado en `--limit` (ej. `--limit 100`).
 * 🎨 **Interfaz de Terminal Avanzada (Rich UI):** Tablas elegantes, alertas a color y barra de progreso interactiva con velocidad de descarga (MB/s) y tiempo restante.
+* 🖥️ **App de escritorio:** Electron + React/TypeScript con búsqueda, lotes por consola, URL directa, progreso en vivo y ajustes R36S.
 * 🐍 **Entorno Virtual Automatizado:** Detecta y ejecuta el entorno virtual `.venv` automáticamente sin necesidad de activación manual previa.
 
 ---
@@ -35,16 +39,42 @@ git clone https://github.com/tu-usuario/romsfun-downloader.git
 cd romsfun-downloader
 ```
 
-### 2. Crear el entorno virtual e instalar dependencias
+### 2. Crear el entorno virtual e instalar dependencias Python
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### 3. (Opcional) App de escritorio
+Requiere Node.js 20+.
+```bash
+cd desktop
+npm install
+npm run dev
+```
+
+La ventana Electron arranca el núcleo Python (`api_server.py`) automáticamente en `http://127.0.0.1:8765`.
+
 ---
 
-## 🛠️ Modos de Uso
+## 🖥️ App de escritorio
+
+Funciones:
+* Buscar por palabra clave y seleccionar juegos
+* Listar por consola con límite configurable
+* Descargar desde URL directa de RomsFun
+* Progreso del lote + archivo actual
+* Ajustes: carpeta de salida, unzip, mejor versión ES>EN, limpieza de tags
+
+Arquitectura:
+* `romsfun_core/` — lógica de negocio Python
+* `api_server.py` — API local JSON + SSE
+* `desktop/` — UI Electron + React (hexagonal / vertical slices)
+
+---
+
+## 🛠️ Modos de Uso (CLI)
 
 ### 🔍 1. Buscar un juego por palabra clave
 ```bash
