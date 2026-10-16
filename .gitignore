@@ -2,7 +2,5 @@
 __pycache__/
 *.pyc
 downloads/
-desktop/node_modules/
-desktop/dist/
 *.log
 .DS_Store
